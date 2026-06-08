@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Employee History Tree View -->
+        <record id="view_employee_history_tree" model="ir.ui.view">
+            <field name="name">employee.history.tree</field>
+            <field name="model">employee.history</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Service Record" delete="false" default_order="change_date desc">
+                    <field name="employee_id" string="Employee"  />
+                    <field name="change_date" string="Change Date"   />
+                    <!-- <field name="from_date" string="From Date"/>
+                    <field name="to_date" string="To Date"/> -->
+                    <field name="changed_field" string="Changed Field"/>
+                    <field name="old_value" string="Old Entry"/>
+                    <field name="new_value" string="New Entry" />
+                    <field name="as_on_date" string="Effective From" readonly="0" required="1"/>
+                     <!-- <field name="wage" string="new salary"/> -->
+
+                   
+                </tree>
+            </field>
+        </record>
+
+        <!-- Inherit Employee Form View -->
+        <record model="ir.ui.view" id="view_employee_form_inherit">
+            <field name="name">hr.employee.form.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[@name='hr_settings']" position="after">
+                    <page string="Employee Service Record">
+                        <field name="history_ids" mode="tree" readonly="0" context="{'default_order': 'change_date desc'}"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
